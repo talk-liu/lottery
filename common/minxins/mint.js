@@ -10,7 +10,7 @@ export default {
       accounts: [],
       contract: "",
       web3: "",
-      result: { mainThisNum: 0 },
+      result: { mainThisNum: 0, jackpotAmount: 0 },
       gasPriceWei: null,
       gasLimitHex: null,
       amount: null,

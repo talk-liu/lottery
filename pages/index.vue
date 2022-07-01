@@ -75,8 +75,8 @@
               <h3>Current round</h3>
               <p>
                 <label style="color: #fff; font-size: 20px"
-                  >Prize Pot ：<strong
-                    >ETH
+                  ><strong
+                    >Prize Pot ：ETH
                     {{ result.jackpotAmount / 1000000000000000000 }}</strong
                   ></label
                 >
