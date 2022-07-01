@@ -23,9 +23,9 @@ export default {
       mintPrice: 0,
       jackpotAmount: 0,
       balanceNum: 1,
-      claimNftBoll:true,
-      mintNum:1,
-      contractAddr:"0x79A394fcfdD91F245C286dB6ef7E59A6275a75a8"
+      claimNftBoll: true,
+      mintNum: 1,
+      contractAddr: "0x79A394fcfdD91F245C286dB6ef7E59A6275a75a8"
     }
   },
 
@@ -52,7 +52,7 @@ export default {
       this.switchEthereumChain(4);
       notification.error({
         message: 'MetaMask',
-        description: '网络错误请切换到测试网络'
+        description: 'Network error, please switch'
       })
       return
     }
@@ -110,7 +110,7 @@ export default {
         .call();
       this.balanceNum = parseInt(balanceNum);
       console.log(balanceNum)
-      if(!this.balanceNum){
+      if (!this.balanceNum) {
         this.claimNftBoll = false
       }
 
@@ -124,17 +124,17 @@ export default {
       }
       const tokenIdsResult = await this.multicall.methods.aggregate(calls).call();
       let tokenIds = tokenIdsResult[1]
-      const winnerNFT = await this.multicallEve(tokenIds,'winnerNFT')
-      const winnerClaimed = await this.multicallEve(tokenIds,'winnerClaimed')
-      const tokenURI = await this.multicallEve(tokenIds,'tokenURI')
+      const winnerNFT = await this.multicallEve(tokenIds, 'winnerNFT')
+      const winnerClaimed = await this.multicallEve(tokenIds, 'winnerClaimed')
+      const tokenURI = await this.multicallEve(tokenIds, 'tokenURI')
 
 
-      for(let i = 0;i<tokenIds.length;i++){
-        const isWin = this.web3.utils.hexToBytes('0x'+winnerNFT[1][i].substring(2,66))[31]
-        const epoch = this.web3.utils.hexToBytes('0x'+winnerNFT[1][i].substring(66,130))[31]
-        const isBool = this.web3.utils.hexToBytes('0x'+winnerClaimed[1][i].substring(2,66))[31]
+      for (let i = 0; i < tokenIds.length; i++) {
+        const isWin = this.web3.utils.hexToBytes('0x' + winnerNFT[1][i].substring(2, 66))[31]
+        const epoch = this.web3.utils.hexToBytes('0x' + winnerNFT[1][i].substring(66, 130))[31]
+        const isBool = this.web3.utils.hexToBytes('0x' + winnerClaimed[1][i].substring(2, 66))[31]
         const hexToAsciis = this.web3.utils.hexToAscii(tokenURI[1][i])
-        const { image } = await get(hexToAsciis.substring(64,hexToAsciis.length))
+        const { image } = await get(hexToAsciis.substring(64, hexToAsciis.length))
 
         this.nftIdAttr.push({
           id: parseInt(tokenIds[i]),
@@ -148,47 +148,17 @@ export default {
             id: parseInt(tokenIds[i]),
             boll: false,
             image: image,
-            jackpotAmount:jackpotAmount/100000000000000000
+            jackpotAmount: jackpotAmount / 1000000000000000000
           })
         }
       }
-      if(!this.claimNftIdAttr.length){
+      if (!this.claimNftIdAttr.length) {
         this.claimNftBoll = false
       }
-
-
-
-
-      // for (let i = 0; i < this.balanceNum; i++) {
-      //   const nftId = await this.contract.methods
-      //     .tokenOfOwnerByIndex(this.accounts[0], i)
-      //     .call();
-      //   const winnerNFT = await this.contract.methods.winnerNFT(nftId).call();
-      //   const winnerClaimed = await this.contract.methods.winnerClaimed(nftId).call();
-      //   const tokenURI = await this.contract.methods.tokenURI(nftId).call();
-
-      //   const { image } = await get(tokenURI)
-      //   this.nftIdAttr.push({
-      //     id: nftId,
-      //     boll: false,
-      //     isWin: winnerNFT.isWin,
-      //     image: image
-      //   })
-      //   if (winnerNFT.isWin && (!winnerClaimed)) {
-      //     this.claimNftIdAttr.push({
-      //       id: nftId,
-      //       boll: false,
-      //       image: image
-      //     })
-      //   }
-      //   if(this.balanceNum <= i){
-      //     this.claimNftBoll = false
-      //   }
-      // }
     },
-    async multicallEve (tokenIds,type){
+    async multicallEve(tokenIds, type) {
       let winners = []
-      for(let i=0; i < tokenIds.length; i++) {
+      for (let i = 0; i < tokenIds.length; i++) {
         let tokenId = parseInt(tokenIds[i])
         let winner = [
           this.contractAddr,

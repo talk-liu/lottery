@@ -9,6 +9,7 @@
           <nuxt-link to="/claim"> Claim </nuxt-link>
           <nuxt-link to="/nft"> NFT </nuxt-link>
           <nuxt-link to="/contact-us"> Contact us </nuxt-link>
+          <nuxt-link to="/faq"> FAQ </nuxt-link>
           <p>
             <img src="~/assets/ico/metamask-fox.svg" />
             <a v-if="accounts[0]">{{ accounts[0] | userInformation }}</a>

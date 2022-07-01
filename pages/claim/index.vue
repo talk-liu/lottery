@@ -13,7 +13,7 @@
             </p>
             <p>
               <span> Prize </span>
-              <label> {{ val.jackpotAmount }} </label>
+              <label> {{ val.jackpotAmount }} ETH</label>
             </p>
             <p class="opensea" @click="claimEve(val.id)">Claim</p>
           </li>
@@ -25,9 +25,7 @@
     </div>
     <div v-else class="nothing">
       <img src="~/assets/ico/box.png" />
-      <p>
-        You have nothing to claim
-      </p>
+      <p>You have nothing to claim</p>
     </div>
   </div>
 </template>
@@ -35,7 +33,7 @@
 <script>
 import Head from "@/components/Head.vue";
 import minxins from "@/common/minxins/mint.js";
-import { notification, message } from 'ant-design-vue';
+import { notification, message } from "ant-design-vue";
 export default {
   name: "IndexPage",
   components: { Head },
@@ -69,17 +67,17 @@ export default {
 </script>
 
 <style scoped lang="less">
-  .nothing {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    p{
-      font-size: 35px;
-      color: #C1C1C1;
-    }
+.nothing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  p {
+    font-size: 35px;
+    color: #c1c1c1;
   }
+}
 .claim {
   // max-width: 1920px;
   margin: auto;
@@ -96,6 +94,7 @@ export default {
       .portrait {
         width: 100%;
         border-radius: 10px;
+        min-height: 200px;
       }
       .selectedBoll {
         position: absolute;

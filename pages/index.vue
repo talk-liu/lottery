@@ -3,83 +3,102 @@
     <div>
       <Head />
       <div class="mintBox container">
-        <div class="content">
-          <div class="leftMint">
-            <h3>Previous round</h3>
-            <!-- <p><label>Start Time</label>Jun 21,2022,8:00 PM</p>
+        <div class="contentBox">
+          <div class="content">
+            <div class="leftMint">
+              <h3>Previous round</h3>
+              <!-- <p><label>Start Time</label>Jun 21,2022,8:00 PM</p>
             <p><label>End Time</label>Jun 21,2022,8:00 PM</p> -->
-            <p class="pot">
-              <label>Prize Pot</label
-              ><strong> ~ ETH {{ jackpotAmount / 100000000000000000 }}</strong>
-            </p>
-          </div>
-          <div class="mint">
-            <ul class="countDown">
-              <li>
-                <h2>Round {{ currentEpoch }}</h2>
-                <p class="times">
-                  <time> {{ itemDate.h }} </time>
-                  <span>:</span>
-                  <time> {{ itemDate.m }} </time>
-                  <span>:</span>
-                  <time> {{ itemDate.s }} </time>
-                </p>
-                <!-- <a class="utc">UTC+8</a> -->
-              </li>
-            </ul>
-            <ul class="minted">
-              <li>
-                <label>Minted</label>
-                <h3>{{ result.mainThisNum }}/{{ mintLimitPerRound }}</h3>
-              </li>
-              <li>
-                <label>Price</label>
-                <h3>
-                  <img src="~/assets/ico/eth.png" />{{
-                    mintPrice / 100000000000000000
-                  }}
-                  ETH
-                </h3>
-              </li>
-            </ul>
-            <div>
-              <!-- <strong> Mint:</strong> -->
-              <p>
-                <img @click="pushEve" src="~/assets/mint/add.png" />
-                <input
-                  oninput="value=value.replace(/^(0+)|[^\d]+/g,'')"
-                  v-model="mintNum"
-                  type="text"
-                />
-                <img @click="reduceEve" src="~/assets/mint/reduce.png" />
+              <p class="pot">
+                <!-- <label>Prize Pot</label> -->
+                <strong
+                  >Prize Pot ：{{ jackpotAmount / 1000000000000000000 }} ETH
+                </strong>
               </p>
             </div>
-            <p
-              @click="mint"
-              :class="[
-                itemDate.lockTimestamp >= itemDate.thisTimestamp &&
-                result.mainThisNum < 10
-                  ? ''
-                  : 'pointer',
-              ]"
-              class="mints"
-            >
-              Mint
-            </p>
-            <!-- <a class="countdown"> Check Countdown </a> -->
-          </div>
-          <div class="rightMint">
-            <h3>Current round</h3>
-            <p><label>Trading Time</label>{{ result.lockTimestamp }}</p>
-            <p><label>Countdown</label>{{ result.closeTimestamp }}</p>
-            <p class="tips">
-              <img src="~/assets/ico/tips.png" />
-              <span>
-                After minting your NFT,you can freely trade on <a>opensea</a> or
-                sell it to
-                <nuxt-link to="/nft">the project team</nuxt-link>
-              </span>
-            </p>
+            <div class="mint">
+              <ul class="countDown">
+                <li>
+                  <h2>Round {{ currentEpoch }}</h2>
+                  <p class="times">
+                    <time> {{ itemDate.h }} </time>
+                    <span>:</span>
+                    <time> {{ itemDate.m }} </time>
+                    <span>:</span>
+                    <time> {{ itemDate.s }} </time>
+                  </p>
+                  <!-- <a class="utc">UTC+8</a> -->
+                </li>
+              </ul>
+              <ul class="minted">
+                <li>
+                  <label>Minted</label>
+                  <h3>{{ result.mainThisNum }}/{{ mintLimitPerRound }}</h3>
+                </li>
+                <li>
+                  <label>Price</label>
+                  <h3>
+                    <img src="~/assets/ico/eth.png" />{{
+                      mintPrice / 1000000000000000000
+                    }}
+                    ETH
+                  </h3>
+                </li>
+              </ul>
+              <div>
+                <!-- <strong> Mint:</strong> -->
+                <p>
+                  <img @click="reduceEve" src="~/assets/mint/reduce.png" />
+                  <input
+                    oninput="value=value.replace(/^(0+)|[^\d]+/g,'')"
+                    v-model="mintNum"
+                    type="text"
+                  />
+                  <img @click="pushEve" src="~/assets/mint/add.png" />
+                </p>
+              </div>
+              <p
+                @click="mint"
+                :class="[
+                  itemDate.lockTimestamp >= itemDate.thisTimestamp &&
+                  result.mainThisNum < 10
+                    ? ''
+                    : 'pointer',
+                ]"
+                class="mints"
+              >
+                Mint
+              </p>
+              <!-- <a class="countdown"> Check Countdown </a> -->
+            </div>
+            <div class="rightMint">
+              <h3>Current round</h3>
+              <p>
+                <label style="color: #fff; font-size: 20px"
+                  >Prize Pot ：<strong
+                    >ETH
+                    {{ result.jackpotAmount / 1000000000000000000 }}</strong
+                  ></label
+                >
+              </p>
+              <p><label>Trading Time</label>{{ result.lockTimestamp }}</p>
+              <p>
+                <label>Next round start time</label>{{ result.closeTimestamp }}
+              </p>
+              <p class="tips">
+                <img src="~/assets/ico/tips.png" />
+                <span>
+                  After minting your NFT,you can freely trade on
+                  <a
+                    target="blank"
+                    href="https://testnets.opensea.io/collection/nft-lottery-ri5payvvos"
+                    >opensea</a
+                  >
+                  or sell it to
+                  <nuxt-link to="/nft">the project team</nuxt-link>
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -92,7 +111,7 @@ import Head from "@/components/Head.vue";
 import minxins from "@/common/minxins/mint.js";
 import Web3 from "web3";
 import ABI from "@/common/json/abi.json";
-import { notification, message } from 'ant-design-vue';
+import { notification, message } from "ant-design-vue";
 import moment from "moment";
 export default {
   name: "IndexPage",
@@ -158,19 +177,21 @@ export default {
       if (this.mintNum === "") {
         this.mintNum = 0;
       }
-      if((this.mintNum+this.result.mainThisNum)>=this.mintLimitPerRound){
-        return 
+      if (this.mintNum + this.result.mainThisNum >= this.mintLimitPerRound) {
+        return;
       }
       this.mintNum += 1;
     },
     async mint() {
-
       const web3 = this.web3;
       this.amount = web3.utils.numberToHex(
         web3.utils.toWei(String(this.mintNum * 0.001), "ether")
       );
 
-      if (this.itemDate.lockTimestamp >= this.itemDate.thisTimestamp && this.result.mainThisNum < 10) {
+      if (
+        this.itemDate.lockTimestamp >= this.itemDate.thisTimestamp &&
+        this.result.mainThisNum < 10
+      ) {
         const mints = this.contract.methods.mint;
         mints(this.mintNum)
           .send({
@@ -182,26 +203,26 @@ export default {
           .on("confirmation", (confirmationNumber, receipt) => {
             console.log(confirmationNumber, receipt);
           })
-          .then(result => {
-            console.log(result)
+          .then((result) => {
+            console.log(result);
             notification.success({
-              message: 'MetaMask',
-              description: 'Minting is successful'
-            })
+              message: "MetaMask",
+              description: "Minting is successful",
+            });
           })
-          .catch(reason => {
-            console.log(reason)
+          .catch((reason) => {
+            console.log(reason);
             notification.error({
-              message: 'MetaMask',
-              description: 'Minting failed. Please try again.'
-            })
-          })
-      // this.mintNum = 1
+              message: "MetaMask",
+              description: "Minting failed. Please try again.",
+            });
+          });
+        // this.mintNum = 1
       } else {
         notification.error({
-          message: 'Mint',
-          description: 'Ended'
-        })
+          message: "Mint",
+          description: "Ended",
+        });
       }
     },
   },
@@ -210,11 +231,13 @@ export default {
 <style scoped lang="less">
 .mintBox {
   margin: auto;
-  position: relative;
-  height: 100vh;
+  .contentBox {
+    position: relative;
+    height: 100vh;
+  }
   .content {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 100%;
@@ -234,7 +257,7 @@ export default {
     text-align: left;
     padding: 0px 50px;
     h3 {
-      margin-top: 119px;
+      margin-top: 100px;
       font-size: 46px;
       color: #fff;
     }
@@ -252,23 +275,27 @@ export default {
   .leftMint {
     position: relative;
     .pot {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      // position: absolute;
+      // top: 50%;
+      // left: 50%;
+      // transform: translate(-50%, -50%);
+      label {
+        display: inline-block;
+        margin-right: 12px;
+      }
     }
   }
   .rightMint {
+    strong {
+    }
     .tips {
-      margin-top: 80px;
+      margin-top: 50px;
       font-size: 14px;
       color: #8f8f8f;
       width: 100%;
       img {
         float: left;
         margin-right: 8px;
-      }
-      span {
       }
     }
   }
@@ -305,6 +332,7 @@ export default {
         font-size: 45px;
         font-weight: 700;
         margin-bottom: 22px;
+        padding-top: 10px;
       }
       .times {
         margin-bottom: 20px;
@@ -398,6 +426,9 @@ export default {
 
 @media only screen and (max-width: 1800px) {
   .mintBox {
+    .content {
+      top: 50%;
+    }
     .mint {
       .countDown {
         width: 540px;

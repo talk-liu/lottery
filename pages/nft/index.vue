@@ -39,7 +39,12 @@
             <!-- <span>(20% Off The Original Price)</span> -->
           </p>
           <p class="opensea">
-            <img src="~/assets/ico/opensea.png" />Sell On Opensea
+            <a
+              target="blank"
+              href="https://testnets.opensea.io/collection/nft-lottery-ri5payvvos"
+            >
+              <img src="~/assets/ico/opensea.png" />Sell On Opensea
+            </a>
           </p>
         </li>
       </ul>
@@ -51,9 +56,9 @@
       <img src="~/assets/ico/box.png" />
       <p>
         <!-- <img src="~/assets/ico/font1.png" /> -->
-        Opps, You don't have NFTs. 
-        <br/>
-        No doubt in join. 
+        Opps, You don't have NFTs.
+        <br />
+        No doubt in join.
       </p>
     </div>
     <div v-show="recycleBoll" class="selected">
@@ -132,7 +137,14 @@ export default {
       }
     },
     recyclingEve() {
-      this.refundEve(this.selectedAttr);
+      if (this.selectedAttr.length) {
+        this.refundEve(this.selectedAttr);
+      } else {
+        notification.error({
+          message: "Error",
+          description: "Please select",
+        });
+      }
     },
   },
 };
@@ -144,9 +156,9 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  p{
+  p {
     font-size: 35px;
-    color: #C1C1C1;
+    color: #c1c1c1;
   }
 }
 .buyBack {
@@ -193,11 +205,12 @@ export default {
       .portrait {
         width: 100%;
         border-radius: 10px;
+        min-height: 200px;
       }
       .selectedBoll {
         position: absolute;
-        left: 22px;
-        top: 22px;
+        left: 7%;
+        top: 5%;
         cursor: pointer;
       }
       h4 {
@@ -240,6 +253,9 @@ export default {
         margin-top: 4px;
         img {
           margin-right: 10px;
+        }
+        a {
+          color: #fff;
         }
       }
     }
