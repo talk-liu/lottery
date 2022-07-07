@@ -8,12 +8,15 @@
             <img class="portrait" :src="val.image" />
             <h4>NFT-{{ val.id }}</h4>
             <p>
-              <span> Contract Address </span>
+              <span> Address </span>
               <label> {{ accounts[0] | userInformation }} </label>
             </p>
             <p>
               <span> Prize </span>
-              <label> {{ val.jackpotAmount }} ETH</label>
+              <label
+                ><img width="16px" src="~/assets/ico/eth.png" />
+                {{ val.jackpotAmount }} ETH</label
+              >
             </p>
             <p class="opensea" @click="claimEve(val.id)">Claim</p>
           </li>
@@ -43,12 +46,12 @@ export default {
   },
   methods: {
     async claimEve(id) {
-      this.contract.methods
-        .claim(id)
+      const claim = this.contract.methods.claim;
+      const gas = await this.estimateGas(claim(id));
+      claim(id)
         .send({
           from: this.accounts[0],
-          gasPrice: this.gasPriceWei,
-          gasLimit: this.gasLimitHex,
+          gas: gas,
         })
         .on("confirmation", (confirmationNumber, receipt) => {
           console.log(confirmationNumber, receipt);

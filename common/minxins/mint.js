@@ -11,8 +11,6 @@ export default {
       contract: "",
       web3: "",
       result: { mainThisNum: 0, jackpotAmount: 0 },
-      gasPriceWei: null,
-      gasLimitHex: null,
       amount: null,
       claimId: "",
       currentEpoch: "",
@@ -25,7 +23,8 @@ export default {
       balanceNum: 1,
       claimNftBoll: true,
       mintNum: 1,
-      contractAddr: "0x79A394fcfdD91F245C286dB6ef7E59A6275a75a8"
+      contractAddr: "0x7759f0b33fb35f82ce51ae8c16d4cc990c829196",
+      singNum: 1000000000000000000
     }
   },
 
@@ -65,20 +64,25 @@ export default {
       multicallABI,
       "0x42ad527de7d4e9d9d011ac45b31d8551f8fe9821"
     );
-    const web3 = this.web3;
-    // let mintNum = 5;
-    let gasPriceGwei = "10";
-    let gasLimit = "1800000";
-    this.gasPriceWei = web3.utils.numberToHex(
-      web3.utils.toWei(gasPriceGwei, "gwei")
-    );
-    this.gasLimitHex = web3.utils.numberToHex(gasLimit);
-    // this.amount = web3.utils.numberToHex(
-    //   web3.utils.toWei(String(this.mintNum * 0.001), "ether")
-    // );
     this.init();
   },
   methods: {
+    async estimateGas(func, value = 0) {
+      try {
+        const gas = await func.estimateGas({
+          from: this.accounts[0],
+          value,
+        });
+        return Math.floor(gas * 1.2);
+      } catch (error) {
+        console.log("errr", error.message);
+        const objStartIndex = error.message.indexOf("{");
+        notification.error({
+          message: 'MetaMask',
+          description: error.message.slice(0, objStartIndex)
+        })
+      }
+    },
     switchEthereumChain(value) {
       window.ethereum.request({
         method: "wallet_switchEthereumChain",
@@ -136,19 +140,21 @@ export default {
         const hexToAsciis = this.web3.utils.hexToAscii(tokenURI[1][i])
         const { image } = await get(hexToAsciis.substring(64, hexToAsciis.length))
 
+        const { refundPrice, jackpotAmount } = await this.contract.methods.rounds(epoch).call();
         this.nftIdAttr.push({
           id: parseInt(tokenIds[i]),
           boll: false,
           isWin: isWin,
-          image: image
+          image: image,
+          refundPrice: refundPrice / this.singNum
         })
         if (isWin && (!isBool)) {
-          const { jackpotAmount } = await this.contract.methods.rounds(epoch).call();
+          // const { jackpotAmount } = await this.contract.methods.rounds(epoch).call();
           this.claimNftIdAttr.push({
             id: parseInt(tokenIds[i]),
             boll: false,
             image: image,
-            jackpotAmount: jackpotAmount / 1000000000000000000
+            jackpotAmount: jackpotAmount / this.singNum
           })
         }
       }

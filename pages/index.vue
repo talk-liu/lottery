@@ -6,17 +6,38 @@
         <div class="contentBox">
           <div class="content">
             <div class="leftMint">
-              <h3>Previous round</h3>
+              <h3>Previous Round</h3>
               <!-- <p><label>Start Time</label>Jun 21,2022,8:00 PM</p>
             <p><label>End Time</label>Jun 21,2022,8:00 PM</p> -->
               <p class="pot">
                 <!-- <label>Prize Pot</label> -->
-                <strong
-                  >Prize Pot ：{{ jackpotAmount / 1000000000000000000 }} ETH
-                </strong>
+                <strong>Prize Pot ：{{ jackpotAmount / singNum }} ETH </strong>
+              </p>
+              <p class="socialContact">
+                <a>
+                  <img src="~/assets/ico/twitter.png" />
+                </a>
+                <a>
+                  <img src="~/assets/ico/discord.png" />
+                </a>
+                <a>
+                  <img src="~/assets/ico/github.png" />
+                </a>
               </p>
             </div>
             <div class="mint">
+              <p
+                v-if="
+                  !(
+                    itemDate.lockTimestamp >= itemDate.thisTimestamp &&
+                    result.mainThisNum < mintLimitPerRound
+                  )
+                "
+                class="minting"
+              >
+                <img src="~/assets/ico/minting.png" />
+                Minting complete! Now you can trade freely.
+              </p>
               <ul class="countDown">
                 <li>
                   <h2>Round {{ currentEpoch }}</h2>
@@ -38,9 +59,7 @@
                 <li>
                   <label>Price</label>
                   <h3>
-                    <img src="~/assets/ico/eth.png" />{{
-                      mintPrice / 1000000000000000000
-                    }}
+                    <img src="~/assets/ico/eth.png" />{{ mintPrice / singNum }}
                     ETH
                   </h3>
                 </li>
@@ -61,7 +80,7 @@
                 @click="mint"
                 :class="[
                   itemDate.lockTimestamp >= itemDate.thisTimestamp &&
-                  result.mainThisNum < 10
+                  result.mainThisNum < mintLimitPerRound
                     ? ''
                     : 'pointer',
                 ]"
@@ -72,18 +91,17 @@
               <!-- <a class="countdown"> Check Countdown </a> -->
             </div>
             <div class="rightMint">
-              <h3>Current round</h3>
+              <h3>Current Round</h3>
               <p>
                 <label style="color: #fff; font-size: 20px"
                   ><strong
-                    >Prize Pot ：ETH
-                    {{ result.jackpotAmount / 1000000000000000000 }}</strong
-                  ></label
+                    >Prize Pot ： {{ result.jackpotAmount / singNum }} ETH
+                  </strong></label
                 >
               </p>
               <p><label>Trading Time</label>{{ result.lockTimestamp }}</p>
               <p>
-                <label>Next round start time</label>{{ result.closeTimestamp }}
+                <label>Next Round Start Time</label>{{ result.closeTimestamp }}
               </p>
               <p class="tips">
                 <img src="~/assets/ico/tips.png" />
@@ -91,16 +109,17 @@
                   After minting your NFT,you can freely trade on
                   <a
                     target="blank"
-                    href="https://testnets.opensea.io/collection/nft-lottery-ri5payvvos"
-                    >opensea</a
+                    href="https://testnets.opensea.io/collection/nft-lottery-8sggaih0gx"
+                    >Opensea</a
                   >
-                  or sell it to
-                  <nuxt-link to="/nft">the project team</nuxt-link>
+                  or Trade-in to
+                  <nuxt-link to="/nft">Meta Luck Box</nuxt-link>
                 </span>
               </p>
             </div>
           </div>
         </div>
+        <FAQ style="margin-top: -160px" />
       </div>
     </div>
   </div>
@@ -118,16 +137,11 @@ export default {
   components: { Head },
   mixins: [minxins],
   data() {
-    return {
-      // mintNum: 1,
-    };
+    return {};
   },
   mounted() {
     this.web3 = new Web3(window.ethereum);
-    this.contract = new this.web3.eth.Contract(
-      ABI,
-      "0x79A394fcfdD91F245C286dB6ef7E59A6275a75a8"
-    );
+    this.contract = new this.web3.eth.Contract(ABI, this.contractAddr);
     const ss = (value) => {
       if (value <= 0) {
         return "00";
@@ -185,19 +199,23 @@ export default {
     async mint() {
       const web3 = this.web3;
       this.amount = web3.utils.numberToHex(
-        web3.utils.toWei(String(this.mintNum * 0.001), "ether")
+        web3.utils.toWei(
+          String(this.mintNum * (this.mintPrice / this.singNum)),
+          "ether"
+        )
       );
 
       if (
         this.itemDate.lockTimestamp >= this.itemDate.thisTimestamp &&
-        this.result.mainThisNum < 10
+        this.result.mainThisNum < this.mintLimitPerRound
       ) {
         const mints = this.contract.methods.mint;
+        const gas = await this.estimateGas(mints(this.mintNum), this.amount);
+        console.log(gas);
         mints(this.mintNum)
           .send({
             from: this.accounts[0],
-            gasPrice: this.gasPriceWei,
-            gasLimit: this.gasLimitHex,
+            gas: gas,
             value: this.amount,
           })
           .on("confirmation", (confirmationNumber, receipt) => {
@@ -284,6 +302,13 @@ export default {
         margin-right: 12px;
       }
     }
+    .socialContact {
+      text-align: center;
+      margin-top: 60px;
+      img {
+        width: 60px;
+      }
+    }
   }
   .rightMint {
     strong {
@@ -301,6 +326,13 @@ export default {
   }
   .mint {
     text-align: center;
+    .minting {
+      font-size: 14px;
+      line-height: 14px;
+      img {
+        width: 33px;
+      }
+    }
     .minted {
       display: flex;
       justify-content: center;
@@ -318,6 +350,7 @@ export default {
         img {
           width: 32px;
           margin-right: 20px;
+          margin-top: -6px;
         }
       }
     }

@@ -31,17 +31,26 @@
           <img class="portrait" :src="val.image" />
           <h4>NFT-{{ val.id }}</h4>
           <p>
-            <span> Contract Address </span>
+            <span> Trade-in Price </span>
+            <label>
+              <img width="16px" src="~/assets/ico/eth.png" />{{
+                val.refundPrice
+              }}
+              ETH
+            </label>
+          </p>
+          <p>
+            <span> Address </span>
             <label> {{ accounts[0] | userInformation }} </label>
           </p>
           <p @click="refundEve([val.id])" class="sell">
-            Sell
+            trade In
             <!-- <span>(20% Off The Original Price)</span> -->
           </p>
           <p class="opensea">
             <a
               target="blank"
-              href="https://testnets.opensea.io/collection/nft-lottery-ri5payvvos"
+              href="https://testnets.opensea.io/collection/nft-lottery-8sggaih0gx"
             >
               <img src="~/assets/ico/opensea.png" />Sell On Opensea
             </a>
@@ -94,11 +103,11 @@ export default {
     async refundEve(attr) {
       const refunds = this.contract.methods.refund;
       console.log(attr);
+      const gas = await this.estimateGas(refunds(attr));
       refunds(attr)
         .send({
           from: this.accounts[0],
-          gasPrice: this.gasPriceWei,
-          gasLimit: this.gasLimitHex,
+          gas: gas,
         })
         .on("confirmation", (confirmationNumber, receipt) => {
           console.log(confirmationNumber, receipt);
@@ -226,6 +235,10 @@ export default {
         align-items: center;
         label {
           color: #fff;
+          img {
+            margin-right: 5px;
+            margin-top: -3px;
+          }
         }
       }
       .sell {

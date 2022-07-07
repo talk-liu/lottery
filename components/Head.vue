@@ -13,7 +13,7 @@
           <p>
             <img src="~/assets/ico/metamask-fox.svg" />
             <a v-if="accounts[0]">{{ accounts[0] | userInformation }}</a>
-            <a @click="singInEve" v-else> Login </a>
+            <a @click="singInEve" v-else> Sign in </a>
           </p>
         </li>
       </ul>
@@ -128,6 +128,7 @@ export default {
         padding: 0px 30px;
         width: 230px;
         overflow: hidden;
+        text-align: center;
         img {
           margin-right: 20px;
           width: 27px;
