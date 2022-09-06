@@ -3,7 +3,9 @@
   <div class="header">
     <header>
       <ul class="container">
-        <li></li>
+        <li>
+          <nuxt-link to="/"> <img src="~/assets/logo/logo.png" /></nuxt-link>
+        </li>
         <li>
           <nuxt-link to="/"> Mint </nuxt-link>
           <nuxt-link to="/claim"> Claim </nuxt-link>

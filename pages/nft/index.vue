@@ -44,7 +44,7 @@
             <label> {{ accounts[0] | userInformation }} </label>
           </p>
           <p @click="refundEve([val.id])" class="sell">
-            trade In
+            Trade In
             <!-- <span>(20% Off The Original Price)</span> -->
           </p>
           <p class="opensea">
