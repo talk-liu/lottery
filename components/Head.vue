@@ -11,12 +11,14 @@
           <nuxt-link to="/claim"> Claim </nuxt-link>
           <nuxt-link to="/nft"> Collection </nuxt-link>
           <nuxt-link to="/history"> History </nuxt-link>
+
+          <a href="#faq" v-if="$route.path == '/'"> FAQ </a>
           <!-- <nuxt-link to="/contact-us"> Contact us </nuxt-link>
           <nuxt-link to="/faq"> FAQ </nuxt-link> -->
           <p>
             <img src="~/assets/ico/metamask-fox.svg" />
             <a v-if="accounts[0]">{{ accounts[0] | userInformation }}</a>
-            <a @click="singInEve" v-else> Sign in </a>
+            <a @click="singInEve" v-else> Connect Wallet </a>
           </p>
         </li>
       </ul>

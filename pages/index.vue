@@ -43,16 +43,14 @@
           <li class="trade">
             <h4>Trade-in<img src="~/assets/index/trade-in-icon.png" /></h4>
             <p>
-              When the current round kicks off, the minting channel will open in
-              MetaLuckBox. Each round last for 48H. The user can mint NFTs
-              during the first 24H, after which the minting channel closes and
-              the user can no longer mint any NFTs.
+              If the user no longer wants to keep his NFT, he can recycle it to
+              MetaLuckBox by selling it back. Once recycled, the NFT will be
+              destroyed immediately. The trade-in price of each NFT in
+              MetaLuckBox is 80% of its original price.
             </p>
             <p>
-              The total quantity of NFTs that user can be minted in a round is
-              predetermined. There’s no limit on how many NFTs or how many times
-              a user can mint, unless the number of minted NFTs in the current
-              round has reached the limit.
+              There is no time limite on NFT trade-in, meaning they can trade in
+              minted NFTs when the current round is over.
             </p>
           </li>
         </ul>
@@ -67,7 +65,7 @@
             <p>
               <span>STEP</span>
               <strong>{{ key + 1 }}</strong>
-              <span>ONE</span>
+              <span>{{ item.ids }}</span>
             </p>
             <img src="~/assets/index/brder.png" />
             <p class="website">
@@ -114,7 +112,7 @@
           />
         </video>
       </div>
-      <FAQ />
+      <FAQ id="faq" />
     </div>
     <Bottom />
   </div>
@@ -130,20 +128,24 @@ export default {
     return {
       howList: [
         {
+          ids: "ONE",
           value:
             "Visit the official website of MetaLuckBox and auto-logs in with your wallet (Metamask). ",
         },
         {
+          ids: "TWO",
           value:
             "You then enter the minting page, where you can draw NFTs through minting and view information about the  previous and the current round. ",
         },
         {
+          ids: "THREE",
           value:
             "There is no limit on how many NFTs or how many times you can mint, unless all NFTs have been minted in  the current round and there are no available NFTs. ",
         },
         {
+          ids: "FOUR",
           value:
-            "There is no limit on how many NFTs or how many times you can mint, unless all NFTs have been minted in  the current round and there are no available NFTs. ",
+            "Each round lasts for 48H, as shown in the timer. You can mint NFTs during the first 24H and trade them once  you minted the NFT. The result of NFT draw will be announced at the end of each round.",
         },
       ],
     };
@@ -226,6 +228,7 @@ export default {
           background: url("~/assets/index/minting.png") no-repeat;
           background-size: 100% 100%;
           width: 50%;
+          height: 500px;
           h4 {
             font-weight: 700;
             font-size: 32px;
@@ -295,6 +298,7 @@ export default {
             width: 69px;
             text-align: center;
             font-size: 12px;
+            color: #fff;
           }
           strong {
             display: block;
@@ -348,6 +352,9 @@ export default {
   }
 }
 @media only screen and (max-width: 2000px) {
+  .home .play .just li h3 {
+    font-size: 55px;
+  }
   .home {
     .play {
       padding: 0px 0px;

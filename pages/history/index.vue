@@ -10,7 +10,7 @@
           <strong> Start Time </strong>
           <strong> End Time </strong>
           <strong> Prize </strong>
-          <strong> </strong>
+          <!-- <strong> </strong> -->
         </li>
         <img
           style="margin-bottom: 20px"
@@ -40,13 +40,13 @@
           </p>
           <p class="usd">
             <img src="~/assets/ico/usd.png" />
-            <span>{{ item.jackpotAmount / singNum }}</span>
+            <span>{{ item.jackpotAmount / singNum }} ETH</span>
           </p>
-          <p class="usd">
+          <!-- <p class="usd">
             <a target="_blank" :href="item.transactionHash">
               <img src="~/assets/history/view.png" />
             </a>
-          </p>
+          </p> -->
         </li>
       </ul>
       <div v-else style="text-align: center; padding: 30px 0px">
@@ -87,6 +87,7 @@ export default {
     const roundAttr = [];
     for (let i = 0; i < events.length; i++) {
       let event = events[i];
+      // console.log(JSON.stringify(event));
       // 获取到账户
       // 获取到当前轮数据
       let round = parseInt(event.topics[1]);
