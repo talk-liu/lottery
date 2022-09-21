@@ -12,7 +12,9 @@
             likely to be your chance to win a hundred times the prize.
           </p>
           <p class="explore">
-            <nuxt-link class="now" to="/home"> Explore Now </nuxt-link>
+            <nuxt-link class="now" to="/home">
+              <img src="~/assets/index/wint.png" />
+            </nuxt-link>
             <a class="video" href="#video">
               <img src="~/assets/ico/video.png" />Watch Video</a
             >
@@ -181,25 +183,25 @@ export default {
         }
         .explore {
           margin-top: 82px;
-          .now {
-            width: 254px;
-            height: 62px;
-            line-height: 62px;
-            display: inline-block;
-            background: radial-gradient(
-                  87.18% 87.18% at 7.03% 6.18%,
-                  rgba(95, 254, 255, 0.2) 0%,
-                  rgba(0, 0, 0, 0) 100%
-                )
-                /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
-              linear-gradient(152.02deg, #56545f 16.59%, #0d0c13 102.6%),
-              #32333c;
-            border-radius: 12px;
-            color: #fff;
-            text-align: center;
-            border: 2px solid #de68e4;
-            font-size: 28px;
-          }
+          // .now {
+          //   width: 254px;
+          //   height: 62px;
+          //   line-height: 62px;
+          //   display: inline-block;
+          //   background: radial-gradient(
+          //         87.18% 87.18% at 7.03% 6.18%,
+          //         rgba(95, 254, 255, 0.2) 0%,
+          //         rgba(0, 0, 0, 0) 100%
+          //       )
+          //       /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+          //     linear-gradient(152.02deg, #56545f 16.59%, #0d0c13 102.6%),
+          //     #32333c;
+          //   border-radius: 12px;
+          //   color: #fff;
+          //   text-align: center;
+          //   border: 2px solid #de68e4;
+          //   font-size: 28px;
+          // }
           .video {
             margin-left: 30px;
             color: #fff;

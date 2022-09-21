@@ -1206,7 +1206,7 @@ export default {
   },
   async mounted() {
     const url = new Web3.providers.HttpProvider(
-      "https://rinkeby.infura.io/v3/2b86c426683f4a6095fd175fe931d799"
+      "https://goerli.infura.io/v3/2b86c426683f4a6095fd175fe931d799"
     );
     // const web3 = new Web3(url);
     this.web3 = new Web3(window.ethereum);

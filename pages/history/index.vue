@@ -73,11 +73,11 @@ export default {
   async mounted() {
     const web3 = new Web3(
       new Web3.providers.HttpProvider(
-        "https://rinkeby.infura.io/v3/41d3db874b584770865cb0c194f39c47"
+        "https://goerli.infura.io/v3/41d3db874b584770865cb0c194f39c47"
       )
     );
     const events = await web3.eth.getPastLogs({
-      address: "0x7759f0b33fb35f82ce51ae8c16d4cc990c829196",
+      address: "0xe37971960574A60ec0078c0b370a62595AB288FA",
       topics: [
         "0xf8661aec877e4b8b87afea92dee5fda3b952cb324def1d37b09f00475473cbdc",
       ],

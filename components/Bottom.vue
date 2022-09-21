@@ -3,8 +3,12 @@
   <div class="bottom">
     <img src="~/assets/logo/logo.png" />
     <div>
-      <a> <img src="~/assets/index/contact.png" />Contact us</a>
-      <a> <img src="~/assets/index/code.png" />Open Source Code</a>
+      <a href="mailto:Social@metaluckbox.com">
+        <img src="~/assets/index/contact.png" />Contact us</a
+      >
+      <a target="_blank" href="https://github.com/metaluckbox/">
+        <img src="~/assets/index/code.png" />Open Source Code</a
+      >
       <a target="_blank" href="https://twitter.com/MetaLB777/">
         <img src="~/assets/index/twitter.png" />Twitter</a
       >

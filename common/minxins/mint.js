@@ -23,7 +23,7 @@ export default {
       balanceNum: 1,
       claimNftBoll: true,
       mintNum: 1,
-      contractAddr: "0x7759f0b33fb35f82ce51ae8c16d4cc990c829196",
+      contractAddr: "0xe37971960574A60ec0078c0b370a62595AB288FA",
       singNum: 1000000000000000000
     }
   },
@@ -41,14 +41,14 @@ export default {
     })
     ethereum.on("networkChanged", (networkIDstring) => {
       console.log(networkIDstring)
-      if (networkIDstring !== '4') {
-        this.switchEthereumChain(4);
+      if (networkIDstring !== '5') {
+        this.switchEthereumChain(5);
       }
       location.reload();
     });
     console.log(ethereum.networkVersion)
-    if (ethereum.networkVersion !== '4') {
-      this.switchEthereumChain(4);
+    if (ethereum.networkVersion !== '5') {
+      this.switchEthereumChain(5);
       notification.error({
         message: 'MetaMask',
         description: 'Network error, please switch'
